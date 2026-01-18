@@ -18,12 +18,15 @@ $result = $stmt->get_result();
 $bills = [];
 $grandTotal = 0;
 $totalDue = 0;
+$totalPaid = 0;
 
 while ($row = $result->fetch_assoc()) {
     $bills[$row['category']][] = $row;
     $grandTotal += $row['amount'];
     if ($row['payment_status'] == 0) {
         $totalDue += $row['amount'];
+    } else {
+        $totalPaid += $row['amount'];
     }
 }
 
@@ -75,7 +78,7 @@ $categories = ['Registration', 'Consultation', 'Medicines', 'Laboratory', 'Scann
     </div>
 
     <div class="row mb-4 no-print">
-        <div class="col-md-6">
+        <div class="col-md-4">
             <div class="card text-white bg-dark mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Grand Total</h5>
@@ -83,7 +86,15 @@ $categories = ['Registration', 'Consultation', 'Medicines', 'Laboratory', 'Scann
                 </div>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-4">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">Total Paid</h5>
+                    <p class="card-text h2">$<?php echo number_format($totalPaid, 2); ?></p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
             <div class="card text-white bg-danger mb-3">
                 <div class="card-body">
                     <h5 class="card-title">Total Due</h5>
@@ -98,6 +109,7 @@ $categories = ['Registration', 'Consultation', 'Medicines', 'Laboratory', 'Scann
         <h2>Medical Receipt</h2>
         <p>Consultation ID: #<?php echo $consultation_id; ?></p>
         <p>Date: <?php echo date('Y-m-d H:i:s'); ?></p>
+        <p><strong>Total Amount Paid: $<?php echo number_format($totalPaid, 2); ?></strong></p>
         <hr>
     </div>
 
