@@ -2,7 +2,7 @@
 $host = 'localhost';
 $user = 'root';
 $pass = '';
-$db   = 'medical_billing';
+$db   = 'jeoczvkk_thecochinpetshop';
 
 $conn = new mysqli($host, $user, $pass, $db);
 

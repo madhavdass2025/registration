@@ -1,35 +1,46 @@
-# Medical Multi-Section Billing Dashboard
+# Pet Clinic Management System - Doctor & Billing Modules
 
-This project is a post-consultation checkout dashboard for medical clinics. It allows patients or staff to view categorized bills, pay for them, and print receipts for paid items.
+This project contains the Doctor Consultation Module and the Integrated Billing Dashboard for a Pet Clinic.
 
-## Features
-- **Categorized Billing**: Bills are grouped by Registration, Consultation, Medicines, Laboratory, Scanning, Vaccination, and Injection.
-- **Dynamic UI**: Uses Bootstrap 5 for a responsive, professional look.
-- **Payment Logic**: "Pay Now" buttons for unpaid items; "Paid" status for completed payments.
-- **Totals Calculation**: Automatically calculates "Grand Total" and "Total Due".
-- **Print Functionality**: "Print Receipt" button that triggers a browser print. Only "Paid" items are included in the print view.
-- **Secure**: Uses PHP Prepared Statements to prevent SQL injection.
+## Modules
 
-## Project Structure
-- `index.php`: Main dashboard.
-- `pay.php`: Handler for updating payment status.
-- `includes/db.php`: Database connection configuration.
-- `sql/schema.sql`: Database schema definition.
-- `sql/seed.sql`: Sample data for testing.
+### 1. Doctor Module (`doctor/`)
+- **Dashboard**: View today's schedule for the logged-in doctor. Filter by status (Scheduled, In-Progress, Completed).
+- **Consultation Interface**:
+    - **History**: View past visit timeline including vitals, notes, and prescriptions.
+    - **Vitals**: Capture temperature, heart rate, respiratory rate, and weight. View weight history via Chart.js.
+    - **Diagnosis**: Record clinical notes and next review date.
+    - **Prescriptions**: Dynamic AJAX search for medicines and dosage instructions.
+    - **Orders**: Request Lab tests, Vaccinations, and Scans.
+- **Automatic Billing**: Saving a consultation automatically generates bill entries and updates the total bill amount.
 
-## Setup Instructions
-1. **Database Setup**:
-   - Create a MySQL database named `medical_billing`.
-   - Run the SQL commands in `sql/schema.sql`.
-   - (Optional) Run `sql/seed.sql` to populate sample data.
+### 2. Billing Dashboard (`index.php`)
+- View categorized bills for a specific consultation.
+- Real-time calculation of Grand Total, Total Paid, and Total Due.
+- "Pay Now" functionality for individual items.
+- Print-ready receipts optimized to show only paid items.
 
-2. **Configuration**:
-   - Edit `includes/db.php` and update the database credentials (`host`, `user`, `pass`, `db`).
+## Database Setup
 
-3. **Usage**:
-   - Access the dashboard via `index.php?cid=101` (replace `101` with a valid `consultation_id` from your database).
+1. Create a database named `jeoczvkk_thecochinpetshop`.
+2. Run `sql/mock_existing_tables.sql` to create the core tables.
+3. Run `sql/doctor_module.sql` to extend the database with consultation-specific tables.
+4. Run `sql/mock_data.sql` to populate sample data for testing.
 
-## Technology Stack
-- **Backend**: PHP 7.4+
-- **Database**: MySQL (MySQLi)
-- **Frontend**: Bootstrap 5, Font Awesome
+## Configuration
+
+Edit `includes/db_petclinic.php` to set your database credentials.
+
+## Usage
+
+1. Access the Doctor Dashboard at `/doctor/dashboard.php`.
+2. Click "Start Consultation" to begin a session.
+3. Save the consultation to generate billing data.
+4. View and pay bills at `/index.php?cid=[CONSULT_ID]`.
+
+## Security & Tech Stack
+- **PHP 8.x** with MySQLi Prepared Statements.
+- **Bootstrap 5** for responsive UI.
+- **Select2** for AJAX-powered searchable dropdowns.
+- **SweetAlert2** for user notifications.
+- **Chart.js** for data visualization.
